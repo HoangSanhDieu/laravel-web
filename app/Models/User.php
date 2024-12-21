@@ -2,47 +2,149 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class Admin extends Model
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
+    protected $table = 'admins';
+
+    protected $primaryKey = 'AdminID';
+
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'AdminName',
+        'AdminEmail',
+        'AdminPassword',
     ];
+}
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
+class Category extends Model
+{
+    use HasFactory;
+
+    protected $table = 'categories';
+
+    protected $primaryKey = 'CategoryID';
+
+    protected $fillable = [
+        'CategoryName',
+        'CategoryDescription',
     ];
+}
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
+class Customer extends Model
+{
+    use HasFactory;
+
+    protected $table = 'customers';
+
+    protected $primaryKey = 'CustomerID';
+
+    protected $fillable = [
+        'CustomerName',
+        'CustomerEmail',
+        'CustomerPhoneNum',
+        'CustomerAddress',
+        'CustomerMembership',
+        'AdminID',
+    ];
+}
+
+class Order extends Model
+{
+    use HasFactory;
+
+    protected $table = 'orders';
+
+    protected $primaryKey = 'OrderID';
+
+    protected $fillable = [
+        'OrderName',
+        'OrderDate',
+        'OrderAmount',
+        'CustomerID',
+    ];
+}
+
+class OrderItem extends Model
+{
+    use HasFactory;
+
+    protected $table = 'order_items';
+
+    protected $primaryKey = 'OrderItemID';
+
+    protected $fillable = [
+        'OrderID',
+        'ToyID',
+        'OrderItemQuantity',
+    ];
+}
+
+class Promotion extends Model
+{
+    use HasFactory;
+
+    protected $table = 'promotions';
+
+    protected $primaryKey = 'PromotionID';
+
+    protected $fillable = [
+        'PromotionName',
+        'PromotionDiscountPercent',
+        'StartDate',
+        'EndDate',
+        'ToyID',
+    ];
+}
+
+class Seller extends Model
+{
+    use HasFactory;
+
+    protected $table = 'sellers';
+
+    protected $primaryKey = 'SellerID';
+
+    protected $fillable = [
+        'SellerName',
+        'SellerEmail',
+        'SellerPhoneNum',
+        'SellerPassword',
+        'AdminID',
+    ];
+}
+
+class Store extends Model
+{
+    use HasFactory;
+
+    protected $table = 'stores';
+
+    protected $primaryKey = 'StoreID';
+
+    protected $fillable = [
+        'StoreName',
+        'StoreLocation',
+        'StoreContactInfo',
+        'SellerID',
+    ];
+}
+
+class Toy extends Model
+{
+    use HasFactory;
+
+    protected $table = 'toys';
+
+    protected $primaryKey = 'ToyID';
+
+    protected $fillable = [
+        'ToyName',
+        'ToyPrice',
+        'ToyQuantity',
+        'CategoryID',
+    ];
 }
